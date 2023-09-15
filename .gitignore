@@ -1,0 +1,64 @@
+# Arquivos gerados automaticamente
+*.pyc
+*.pyo
+*.pyd
+*.swp
+*.swo
+*.~
+*.DS_Store
+
+# Diretórios gerados automaticamente
+__pycache__/
+*/__pycache__/
+*.egg-info/
+dist/
+build/
+
+# Arquivo de configurações secretas ou sensíveis (por exemplo, arquivo contendo chaves de API, senhas, etc.)
+.env
+
+# Ambiente virtual Python
+/venv
+
+# Diretório de arquivos de mídia (se você estiver usando o armazenamento local para arquivos de mídia)
+/media/files/output_ndvi/*.png
+/media/files/output_ndvi/*.tif
+/media/files/output_ndvi/*.json
+/media/files/output_ndvi/*.tar
+/media/files/output_rgb/*.png
+/media/files/output_rgb/*.tif
+/media/files/output_rgb/*.json
+/media/files/output_rgb/*.tar
+
+/media/images/output_ndvi/*.png
+/media/images/output_ndvi/*.tif
+/media/images/output_ndvi/*.json
+/media/images/output_ndvi/*.tar
+/media/images/output_rgb/*.png
+/media/images/output_rgb/*.tif
+/media/images/output_rgb/*.json
+/media/images/output_rgb/*.tar
+
+
+# Diretório de arquivos estáticos coletados (se você estiver usando o armazenamento local para arquivos estáticos coletados)
+# /static/
+
+# Arquivos de banco de dados padrão
+# db.sqlite3
+
+
+# Excluindo o MVP
+*/media
+*/static
+*/templates
+*/admin*
+*/apps*
+*/__init__*
+*/models*
+*/serializers*
+*/storage*
+*/tests*
+*/urls*
+*/forms*
+*/managers*
+
