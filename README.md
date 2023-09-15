@@ -32,7 +32,7 @@ Você pode [acessar o código fonte do projeto](https://github.com/GabesSeven/dj
 - ``Python``
 - ``Django``
 - ``Django REST Framework``
-- ``PostgreeSQL``
+- ``PostgreSQL``
 - ``Sentinel Hub``
 - ``GDAL``
 
