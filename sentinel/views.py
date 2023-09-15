@@ -364,8 +364,8 @@ class DetectChange(APIView, SentinelRequests):
     range_date_start_old=''
     range_date_end_old=''
 
-    data_request_new='' 
-    data_request_old=''
+    date_request_new='' 
+    date_request_old=''
     metadados_new=''
     metadados_old=''
 
@@ -424,7 +424,7 @@ class DetectChange(APIView, SentinelRequests):
             """   
             # statistics_table = NDVIStatistics(
             #     gid=immobile.gid,
-            #     date=self.data_request_new,
+            #     date=self.date_request_new,
             #     statistics=statistics,
             # )
             # statistics_table.save()
@@ -468,7 +468,7 @@ class DetectChange(APIView, SentinelRequests):
         """
         Procura pelos metadados corretos no JSON da requisição NDVI_OLD.
         """
-        self.data_request_old, cloud_coverage, self.metadados_old = self.search_data(f"METADATA_NDVI_OLD.json", "output_ndvi")
+        self.date_request_old, cloud_coverage, self.metadados_old = self.search_data(f"METADATA_NDVI_OLD.json", "output_ndvi")
 
         """
         Verifica cobertura de nuvem.
@@ -493,7 +493,7 @@ class DetectChange(APIView, SentinelRequests):
         """
         Procura pelos metadados corretos no JSON da requisição NDVI_NEW.
         """
-        self.data_request_new, cloud_coverage, self.metadados_new = self.search_data(f"METADATA_NDVI_NEW.json", "output_ndvi")
+        self.date_request_new, cloud_coverage, self.metadados_new = self.search_data(f"METADATA_NDVI_NEW.json", "output_ndvi")
 
         """
         Verifica cobertura de nuvem.
@@ -555,7 +555,7 @@ class DetectChange(APIView, SentinelRequests):
             """
             Procura pelos metadados corretos no JSON da requisição NDVI_NEW.
             """
-            self.data_request_new, cloud_coverage, self.metadados_new = self.search_data(f"METADATA_NDVI_NEW.json", "output_ndvi")
+            self.date_request_new, cloud_coverage, self.metadados_new = self.search_data(f"METADATA_NDVI_NEW.json", "output_ndvi")
 
             """
             Verifica cobertura de nuvem.
@@ -567,7 +567,7 @@ class DetectChange(APIView, SentinelRequests):
             """
             Ajusta variáveis para serem salvas no banco de dados.
             """
-            self.data_request_old = latest_image.date_request_ndvi_new
+            self.date_request_old = latest_image.date_request_ndvi_new
             self.metadados_old = latest_image.metadados_ndvi_new
             self.range_date_start_old=latest_image.range_date_start_new
             self.range_date_end_old=latest_image.range_date_end_new
@@ -602,14 +602,14 @@ class DetectChange(APIView, SentinelRequests):
             range_date_end_new=self.range_date_end_new,
             range_date_start_old=self.range_date_start_old,
             range_date_end_old=self.range_date_end_old,
-            date_request_ndvi_new=self.data_request_new, 
-            date_request_ndvi_old=self.data_request_old, 
+            date_request_ndvi_new=self.date_request_new, 
+            date_request_ndvi_old=self.date_request_old, 
             metadados_ndvi_new = self.metadados_new,
             metadados_ndvi_old = self.metadados_old
         )
-        new_image.link_ndvi_old.save(f"{self.id}_IMAGE_NDVI_OLD_{self.data_request_old}.tif", ImageFile(open('media/images/output_ndvi/IMAGE_NDVI_OLD.tif', 'rb')))
-        new_image.link_ndvi_new.save(f"{self.id}_IMAGE_NDVI_NEW_{self.data_request_new}.tif", ImageFile(open('media/images/output_ndvi/IMAGE_NDVI_NEW.tif', 'rb')))
-        new_image.link_ndvi_sub.save(f"{self.id}_IMAGE_NDVI_SUB_{self.data_request_new}.tif", ImageFile(open('media/images/output_ndvi/IMAGE_NDVI_SUB.tif', 'rb')))
+        new_image.link_ndvi_old.save(f"{self.id}_IMAGE_NDVI_OLD_{self.date_request_old}.tif", ImageFile(open('media/images/output_ndvi/IMAGE_NDVI_OLD.tif', 'rb')))
+        new_image.link_ndvi_new.save(f"{self.id}_IMAGE_NDVI_NEW_{self.date_request_new}.tif", ImageFile(open('media/images/output_ndvi/IMAGE_NDVI_NEW.tif', 'rb')))
+        new_image.link_ndvi_sub.save(f"{self.id}_IMAGE_NDVI_SUB_{self.date_request_new}.tif", ImageFile(open('media/images/output_ndvi/IMAGE_NDVI_SUB.tif', 'rb')))
         new_image.save()
         print(f"\n*** Dados salvos com sucesso ***\n")    
         
