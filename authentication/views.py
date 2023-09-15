@@ -166,18 +166,7 @@ class UserView(APIView):
             return Response({"info": "Erro ao criar usuário.", "errors": serializer.errors, "status": status.HTTP_400_BAD_REQUEST}, status=status.HTTP_400_BAD_REQUEST)
     
     def get(self, request, uuid=None):
-        """
-        Realiza Read.
-        """
-        if uuid:
-            user = CustomUser.objects.filter(uuid=uuid).first()
-            if user:
-                serializer = CustomUserSerializer(user)
-                user_groups = user.groups.all()
-                group_names = [group.name for group in user_groups]
-                return Response({"info": "Sucesso ao ler usuário.", "data": serializer.data, "user_groups": group_names}, status=status.HTTP_200_OK)
-            return Response({"info": "Erro ao encontrar usuário.", "status": status.HTTP_400_BAD_REQUEST}, status=status.HTTP_400_BAD_REQUEST)
-        return Response({"info": "Erro ao encontrar usuário.", "status": status.HTTP_400_BAD_REQUEST}, status=status.HTTP_400_BAD_REQUEST)
+        pass
 
     ##### TESTE #####
     # def automatic_login(self, request, email, password):
@@ -190,90 +179,8 @@ class UserView(APIView):
     ###############
 
     def patch(self, request, uuid=None):
-        """
-        Realiza Update.
-        """
-
-        ##### TESTE #####
-        # self.automatic_login(request, 'admin@email.com', 'admin')
-        # print('\n----------------------\n', request.user, '\n----------------------\n')
-        #################
-
-        """
-        Verifica se nome do grupo existe e não é null. 
-        """
-        try:
-            type = request.data.get("type")  
-            if type != "normal" and type != "super":
-                return Response({"info": "Erro ao setar valores dos campos.", "status": status.HTTP_400_BAD_REQUEST}, status=status.HTTP_400_BAD_REQUEST)
-        except:
-            return Response({"info": "Erro ao setar valores dos campos.", "status": status.HTTP_400_BAD_REQUEST}, status=status.HTTP_400_BAD_REQUEST)
-        
-        """
-        Verifica se usuário a ser atualizado existe.
-        """
-        user = CustomUser.objects.filter(uuid=uuid).first()
-        if not user:
-            return Response({"info": "Erro ao encontrar usuário.", "status": status.HTTP_404_NOT_FOUND}, status=status.HTTP_404_NOT_FOUND)
-
-        """
-        Verifica dados de entrada.
-        """
-        serializer = CustomUserSerializer(user, data=request.data, partial=True)
-        if serializer.is_valid():
-            """
-            Se o usuário logado pelo token for admin, permite fazer alterações.
-            """
-
-            if request.user.is_staff:
-                
-                old_group_name = request.data.get("old_group_name")
-                new_group_name = request.data.get("new_group_name")
-
-                """
-                Verifica se variáveis foram setadas corretamente.
-                """
-                if not new_group_name or not old_group_name:
-                    return Response({"info": "Erro nos nomes de grupos, pois não podem ser vazio.", "status": status.HTTP_400_BAD_REQUEST}, status=status.HTTP_400_BAD_REQUEST)
-                
-                """
-                Atualiza permissões.
-                """
-                if type == "super":
-                    val=True
-                else:
-                    """
-                    Verificar se usuário é o único admin para grupo não ficar sem administrador.
-                    """
-
-                    try:
-                        group = Group.objects.get(name=old_group_name)
-                        count_admin = group.user_set.filter(is_staff=True).count()  
-                    except:
-                        return Response({"info": "Erro pois grupo não existe.", "status": status.HTTP_400_BAD_REQUEST}, status=status.HTTP_400_BAD_REQUEST)
-            
-                    if count_admin == 1:
-                        return Response({"info": "Erro ao modificar permissão, grupos devem possuir ao menos um administrador.", "status": status.HTTP_400_BAD_REQUEST}, status=status.HTTP_400_BAD_REQUEST)
-                    
-                    val=False
-
-                """
-                Verifica se usuário está contido em algum grupo, se sim altera o nome desse grupo pelo nome do novo grupo.
-                """
-                if old_group_name in user.groups.values_list('name', flat=True):        
-                    old_group = Group.objects.get(name=old_group_name)
-                    old_group.name = new_group_name
-                    old_group.save()
-                else:
-                    return Response({"info": "Erro ao encontrar grupo correspondente ao nome fornecido.", "errors": serializer.errors, "status": status.HTTP_400_BAD_REQUEST}, status=status.HTTP_400_BAD_REQUEST)
-            
-                serializer.save(is_staff=val)
-                return Response({"info": "Sucesso ao atualizar usuário.", "status": status.HTTP_200_OK}, status=status.HTTP_200_OK)
-            else:
-                return Response({"info": "Usuário não possui permissão para modificação.", "status": status.HTTP_400_BAD_REQUEST}, status=status.HTTP_400_BAD_REQUEST)
-        else:
-            return Response({"info": "Erro ao atualizar usuário.", "errors": serializer.errors, "status": status.HTTP_400_BAD_REQUEST}, status=status.HTTP_400_BAD_REQUEST)
-
+        pass
+    
     def delete(self, request, uuid=None):
         """
         Realiza Delete. 
